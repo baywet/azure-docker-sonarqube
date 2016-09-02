@@ -17,14 +17,19 @@ Please refer to the [following documentation](https://azure.microsoft.com/en-us/
 Write down the database name, Azure SQL Server FQDN, username and password.
 
 ##step 4 setup docker
-Please refer to the [following documentation](https://docs.docker.com/engine/installation/linux/ubuntulinux/) to install docker on your 
+Please refer to the [following documentation](https://docs.docker.com/engine/installation/linux/ubuntulinux/) to install docker on your machine.  
+If you want to go faster to install docker you can simply run :  
+`wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/dockerfastinstall.sh`  
+`chmod +x dockerfastinstall.sh`  
+`.\dockerfastinstall.sh` 
+Note: in both cases don't forget to log in and out from the machine before going to step 5.  
 ##step 5 configure all containers
-From the bash run 
-`wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/step1.sh`
-`chmod +x step1.sh`
-Then edit the script using vi to set up your configuration values.
-Then run 
-`.\step1.sh`
+From the bash run  
+`wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/step1.sh`  
+`chmod +x step1.sh`  
+Then edit the script using vi to set up your configuration values.  
+Then run   
+`.\step1.sh`  
 Note: the first load time might time out or take a while
 
 ##step 6 configure authentication
