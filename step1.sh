@@ -16,7 +16,8 @@ sudo ufw allow 80
 sudo ufw allow 443
 sudo ufw allow 9000
 sudo ufw allow 9002
-sudo ufw enable
+sudo systemctl start ufw
+sudo systemctl enable ufw
 
 
 docker run -d --name sonarqube -p 9000:9000 -p 9002:9002 -e SONARQUBE_JDBC_USERNAME=$dbusername -e SONARQUBE_JDBC_PASSWORD=$dbpwd -e SONARQUBE_JDBC_URL=$connectionString  --restart=always sonarqube
