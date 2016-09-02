@@ -2,8 +2,14 @@ dbusername=admin@server
 dbpwd=Pwd
 sqlserver=server.database.windows.net
 databasename=dbname
-hostname=machinename
+hostname=machinefqdn
 connectionString="jdbc:sqlserver://$sqlserver;databaseName=$databasename;"
+organization=companyname
+ounit=division
+country=twocharacterscountrycode
+location=cityname
+state=state
+email=email@domain.com
 
 sudo ufw allow 22
 sudo ufw allow 80
@@ -15,7 +21,7 @@ sudo ufw enable
 
 docker run -d --name sonarqube -p 9000:9000 -p 9002:9002 -e SONARQUBE_JDBC_USERNAME=$dbusername -e SONARQUBE_JDBC_PASSWORD=$dbpwd -e SONARQUBE_JDBC_URL=$connectionString  --restart=always sonarqube
 
-sudo openssl req -new > $hostname.crt
+sudo openssl req -new -nodes -subj "/C=$country/ST=$state/L=$location/O=$organization/OU=$ounit/CN=$hostname/emailAddress=$email" > $hostname.crt
 mv privkey.pem $hostname.pem
 sudo openssl rsa -in $hostname.pem -out $hostname.key
 sudo openssl x509 -in $hostname.crt -out $hostname.cert.cert -req -signkey $hostname.key -days 365
