@@ -48,21 +48,23 @@ sudo cp $hostname.key /etc/ssl/private/$hostname.key
 
 #creating a dummy nginx machine to copy the config file and destorying it
 docker run --name nginx -d nginx
-sudo docker cp nginx:/etc/nginx/conf.d/default.conf /var/sitesconf
+docker cp nginx:/etc/nginx/nginx.conf .
 docker stop nginx
 docker rm nginx
 
-#creating the real nginx reverse proxy container, mapped to our config file
-docker run --name nginx --link sonarqube:sonarqube -v /var/sitesconf/default.conf:/etc/nginx/conf.d/default.conf:ro -v /etc/ssl/certs/$hostname.crt:/etc/ssl/certs/$hostname.crt -v /etc/ssl/private/$hostname.key:/etc/ssl/private/$hostname.key -d -p 443:443 -p 80:80 --restart=always nginx
-
 #configuring the reverse proxy
-sudo sed -i "s/\(listen\s*80;\)/\1\n\tlisten 443 ssl;\n\tlisten [::]:443 ssl;\n\tclient_max_body_size 64M;\n\tssl_certificate \/etc\/ssl\/certs\/$hostname.crt;\n\tssl_certificate_key \/etc\/ssl\/private\/$hostname.key;/" /var/sitesconf/default.conf
-sudo sed -i "s/server_name\s*localhost;/server_name  $hostname;/" /var/sitesconf/default.conf
-sudo sed -i '15d;17,48d' /var/sitesconf/default.conf
+sed -i "s/\(listen\s*80;\)/\1\n\tlisten 443 ssl;\n\tlisten [::]:443 ssl;\n\tclient_max_body_size 64M;\n\tssl_certificate \/etc\/ssl\/certs\/$hostname.crt;\n\tssl_certificate_key \/etc\/ssl\/private\/$hostname.key;/" ./nginx.conf
+sed -i "s/server_name\s*localhost;/server_name  $hostname;/" ./nginx.conf
+sed -i '15d;17,48d' ./nginx.conf
 sqip=$(docker inspect sonarqube | grep IPAddress | sed '1d;3d;' | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}")
-sudo sed -i "s/root.*;/proxy_pass http:\/\/$sqip:9000;\n\tproxy_set_header X-Real-IP \$remote_addr;\n\tproxy_set_header X-Forwarded-For \$remote_addr;\n\tproxy_set_header Host \$host;/" /var/sitesconf/default.conf
-docker stop nginx
-docker start nginx
+sed -i "s/root.*;/proxy_pass http:\/\/$sqip:9000;\n\tproxy_set_header X-Real-IP \$remote_addr;\n\tproxy_set_header X-Forwarded-For \$remote_addr;\n\tproxy_set_header Host \$host;/" ./nginx.conf
+
+#moving the nginx config file to the right place
+sudo mkdir /var/sitesconf
+sudo mv ./nginx.conf /var/sitesconf
+
+#creating the real nginx reverse proxy container, mapped to our config file
+docker run --name nginx --link sonarqube:sonarqube -v ./var/sitesconf/nginx.conf:/etc/nginx/nginx.conf:ro -v /etc/ssl/certs/$hostname.crt:/etc/ssl/certs/$hostname.crt -v /etc/ssl/private/$hostname.key:/etc/ssl/private/$hostname.key -d -p 443:443 -p 80:80 --restart=always nginx
 
 #blocking admin ports for security reasons
 sudo ufw deny 9000
