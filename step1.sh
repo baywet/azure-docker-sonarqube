@@ -64,7 +64,7 @@ sudo mkdir /var/sitesconf
 sudo mv ./nginx.conf /var/sitesconf
 
 #creating the real nginx reverse proxy container, mapped to our config file
-docker run --name nginx --link sonarqube:sonarqube -v ./var/sitesconf/nginx.conf:/etc/nginx/nginx.conf:ro -v /etc/ssl/certs/$hostname.crt:/etc/ssl/certs/$hostname.crt -v /etc/ssl/private/$hostname.key:/etc/ssl/private/$hostname.key -d -p 443:443 -p 80:80 --restart=always nginx
+docker run --name nginx --link sonarqube:sonarqube -v /var/sitesconf/nginx.conf:/etc/nginx/nginx.conf:ro -v /etc/ssl/certs/$hostname.crt:/etc/ssl/certs/$hostname.crt -v /etc/ssl/private/$hostname.key:/etc/ssl/private/$hostname.key -d -p 443:443 -p 80:80 --restart=always nginx
 
 #blocking admin ports for security reasons
 sudo ufw deny 9000
