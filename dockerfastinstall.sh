@@ -11,3 +11,5 @@ sudo apt-get install docker-engine -y --force-yes
 sudo service docker start
 sudo systemctl enable docker
 sudo sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
+sudo usermod -aG docker $USER
+echo "DOCKER FAST INSTALL DONE, DONT FORGET TO LOGOUT AND IN AGAIN"
