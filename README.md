@@ -14,7 +14,8 @@ Please refer to the [following documentation](https://azure.microsoft.com/en-us/
 
 ## step 3 create the Azure SQL database
 Please refer to the [following documentation](https://azure.microsoft.com/en-us/documentation/articles/sql-database-get-started/) to create an Azure SQL database.
-Write down the database name, Azure SQL Server FQDN, username and password.
+Write down the database name, Azure SQL Server FQDN, username and password.  
+**Make sure the collation is `SQL_Latin1_General_CP1_CS_AS`**
 
 ## step 4 setup docker
 Please refer to the [following documentation](https://docs.docker.com/engine/installation/linux/ubuntulinux/) to install docker on your machine.  
