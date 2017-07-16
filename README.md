@@ -22,16 +22,20 @@ If you want to go faster to install docker you can simply run :
 ```
 wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/dockerfastinstall.sh  
 chmod +x dockerfastinstall.sh
-.\dockerfastinstall.sh
+./dockerfastinstall.sh
 ``` 
 Note: in both cases don't forget to log in and out from the machine before going to step 5.  
 ## step 5 configure all containers
 From the bash run  
-`wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/step1.sh`  
-`chmod +x step1.sh`  
+```
+wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/step1.sh`  
+chmod +x step1.sh
+```
 Then edit the script using vi to set up your configuration values.  
-Then run   
-`.\step1.sh`  
+Then run  
+``` 
+./step1.sh
+```
 Note: the first load time might time out or take a while
 
 ## step 6 configure authentication
