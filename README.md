@@ -29,7 +29,7 @@ Note: in both cases don't forget to log in and out from the machine before going
 ## step 5 configure all containers
 From the bash run  
 ```
-wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/step1.sh`  
+wget https://raw.githubusercontent.com/baywet/azure-docker-sonarqube/master/step1.sh  
 chmod +x step1.sh
 ```
 Then edit the script using vi to set up your configuration values.  
