@@ -23,6 +23,7 @@ mv plugins currentplugins
 #stopping and renaming the container in case something goes wrong
 docker stop sonarqube
 docker rename sonarqube sonarqubebackup
+docker update --restart=no sonarqubebackup
 
 #upgrade image copy
 docker pull sonarqube
@@ -33,3 +34,6 @@ docker run -d --name sonarqube -p 9000:9000 -p 9002:9002 -e SONARQUBE_JDBC_USERN
 #reinstalling the plugins
 docker cp currentplugins/. sonarqube:/opt/sonarqube/extensions/plugins
 docker restart sonarqube
+
+#clearing old images
+docker image prune -a -f
